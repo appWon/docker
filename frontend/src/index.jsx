@@ -16,22 +16,26 @@ const App = () => {
     if (code === 'Enter' && inputValue !== '') {
       setTodoList([...todoList, inputValue]);
       setInputValue('');
+      getData();
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const result = await axios('http://localhost:8000/todos');
+
+      setTodoList(result.data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   useEffect(async () => {
-    const getData = async () => {
-      const result = await axios('');
-
-      setTodoList(result.data);
-    };
-
     getData();
   }, []);
 
   return (
     <div>
-      {console.log(11)}
       <input
         type="text"
         value={inputValue}
